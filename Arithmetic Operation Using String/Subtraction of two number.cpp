@@ -8,8 +8,8 @@ bool isSmaller(string num1, string num2)
     if(n1 > n2) return 0;
     if(n2 > n1) return 1;
     for(int i = 0; i < n1; i++)
-        if(num1[i] >= num2[i]) return 0;
-    return 1;
+        if(num2[i] > num1[i]) return 1;
+    return 0;
 }
 string zero_remover(string num)
 {
