@@ -1,18 +1,17 @@
-#include <bits/stdc++.h>
+#include <iostream>
 
 using namespace std;
 
-int bigMod(int p)
+int bigMod(int a, int b, int M)
 {
-   if(p == 0) return 1 % 3;
-   int ans = bigMod(p / 2);
-   ans = (ans * ans) % 3;
-   if(p % 2) ans = (ans * 2) % 3;
-   return ans;
+    if(b == 0) return 1 % M;
+    int x  = bigMod(a, b / 2, M);
+    x = (x * x) % M;
+    if(b % 2) x = (x * a) % M;
+    return x;
 }
-
 int main()
 {
-    cout<<bigMod(4);
+    cout<<bigMod(2, 4, 3)<<endl;
     return 0;
 }
