@@ -8,7 +8,7 @@ void merge(int ara[], int l, int mid, int r)
     int temp[SIZE], k = 0, i= l, j = mid+1;
     while((i <= mid) && (j <= r))
     {
-        if(ara[i] < ara[j] && (i <= mid)) temp[k++] = ara[i++];
+        if(ara[i] < ara[j]) temp[k++] = ara[i++];
         else temp[k++] = ara[j++];
     }
     while(i <= mid) temp[k++] = ara[i++];
