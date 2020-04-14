@@ -6,8 +6,15 @@ void insertion_sort(int ara[], int n)
 {
     for(int i = 1; i < n; i++)
     {
-       for(int j = 0; ara[i] < ara[j]; j++)
-               swap(ara[j], ara[i]);
+        int j = i, k = i - 1;
+        while(ara[j] < ara[k] && k >= 0)
+        {
+            int temp = ara[j];
+            ara[j] = ara[k];
+            ara[k] = temp;
+            j--;
+            k--;
+        }
     }
 }
 int main()
