@@ -4,7 +4,7 @@ using namespace std;
 
 void permutation(int ara[], int start, int end)
 {
-    if(start == (end))
+    if(start == end)
     {
         for(int i = 0; i <= end; i++)
             cout<<ara[i]<<" ";
