@@ -2,29 +2,27 @@
 
 using namespace std;
 
-int upper(int ara[], int l, int r, int x)
+int upper(int arr[], int l, int r, int x)
 {
+    int last = r;
     while(l <= r)
     {
         int mid = l + (r - l) / 2;
-        if(ara[mid] >= x) r = mid - 1;
-        if(ara[mid] < x) l = mid + 1;
-        if((l == mid) && (ara[mid] >= x)) return mid;
-        if((ara[mid] < x) && (ara[mid + 1] >= x))return mid + 1;
-        if((r == mid) && (ara[mid] < x)) return -1; ///not found.
+        if(arr[mid] >= x) r = mid - 1;
+        else if(arr[mid] < x) l = mid + 1;
     }
+    if(l > last) return -1;
+    return l;
 }
-int lower(int ara[], int l, int r, int x)
+int lower(int arr[], int l, int r, int x)
 {
     while(l <= r)
     {
         int mid = l + (r - l) / 2;
-        if(ara[mid] > x) r = mid - 1;
-        if(ara[mid] <= x) l = mid + 1;
-        if((r == mid) && (ara[mid] <= x)) return mid;
-        if((ara[mid] <= x) && (ara[mid + 1] > x)) return mid;
-        if((l == mid) && (ara[mid] > x)) return -1;///not found
+        if(arr[mid] <= x) l = mid + 1;
+        else if(arr[mid] > x) r = mid - 1;
     }
+    return r;
 }
 int main()
 {
