@@ -70,12 +70,11 @@ void insert_nth_pos(Node *head, int n, int data)
 
 void reverse_print(Node *head)
 {
-    Node *temp = head -> next;
-    while(temp -> next != NULL) temp = temp -> next;
-    while(temp -> prev != NULL)
+    while(head -> next != NULL) head = head -> next;
+    while(head -> prev != NULL)
     {
-        cout<<temp -> data<<" ";
-        temp = temp -> prev;
+        cout<<head -> data<<" ";
+        head = head -> prev;
     }
     cout<<endl;
 }
