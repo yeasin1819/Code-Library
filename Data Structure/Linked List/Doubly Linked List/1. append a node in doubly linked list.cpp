@@ -32,6 +32,17 @@ void print(Node *head)
     cout<<endl;
 }
 
+void reverse_print(Node *head)
+{
+    while(head -> next != NULL) head = head -> next;
+    while(head -> prev != NULL)
+    {
+        cout<<head -> data<<" ";
+        head = head -> prev;
+    }
+    cout<<endl;
+}
+
 int main()
 {
     Node *head = (Node*)malloc(sizeof(Node));
@@ -40,7 +51,6 @@ int main()
     append(head, 1);
     append(head, 2);
     print(head);
-    append(head, 3);
-    print(head);
+    reverse_print(head);
     return 0;
 }
