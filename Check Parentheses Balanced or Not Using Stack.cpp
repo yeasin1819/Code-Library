@@ -9,7 +9,8 @@ bool is_balanced(string str)
     {
         if(str[i]=='(' || str[i]=='{' || str[i]=='[') s.push(str[i]);
         else if(s.empty()) return 0;
-        else if((str[i] - s.top()) == 1) s.pop();
+        else if(((str[i]-s.top())==1) || (str[i]-s.top()==2)) s.pop();
+        else return 0;
     }
     if(s.empty()) return 1;
     return 0;
