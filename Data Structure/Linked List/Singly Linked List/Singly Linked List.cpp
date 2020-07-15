@@ -2,15 +2,15 @@
 
 using namespace std;
 
-typedef struct node SinglyList;
+typedef struct node singlyList;
 
 struct node
 {
     int data;
-    SinglyList *next = NULL, *tail = NULL;
-    SinglyList *create_node(int data, SinglyList *next)
+    singlyList *next = NULL, *tail = NULL;
+    singlyList *create_node(int data, singlyList *next)
     {
-        SinglyList *new_node = (SinglyList*)malloc(sizeof(SinglyList));
+        singlyList *new_node = (singlyList*)malloc(sizeof(singlyList));
         new_node -> data = data;
         new_node -> next = next;
         return new_node;
@@ -33,7 +33,7 @@ struct node
             next = create_node(data, next);
             return;
         }
-        SinglyList *temp = next;
+        singlyList *temp = next;
         pos -= 2;
         while((temp -> next != NULL) && pos--) temp = temp -> next;
         temp -> next = create_node(data, temp -> next);
@@ -45,7 +45,7 @@ struct node
             next = next -> next;
             return;
         }
-        SinglyList *temp = next;
+        singlyList *temp = next;
         pos -= 2;
         while(temp -> next != NULL && pos--) temp = temp -> next;
         if(temp -> next == NULL) return;
@@ -58,7 +58,7 @@ struct node
             next = next -> next;
             return;
         }
-        SinglyList *temp = next;
+        singlyList *temp = next;
         while(temp -> next != NULL)
         {
             if(temp -> next -> data == data)
@@ -71,7 +71,7 @@ struct node
     }
     void reverse_list()
     {
-        SinglyList *rev = NULL, *temp = next;
+        singlyList *rev = NULL, *temp = next;
         while(temp != NULL)
         {
             rev = create_node(temp -> data, rev);
@@ -81,7 +81,7 @@ struct node
     }
     void print()
     {
-        SinglyList *t = next;
+        singlyList *t = next;
         while(t != NULL)
         {
             t->next==NULL ? cout<<t->data<<endl : cout<<t->data<<" ";
@@ -92,7 +92,7 @@ struct node
 
 int main()
 {
-    SinglyList myList;
+    singlyList myList;
     myList.append(2);
     myList.insert_nth_pos(1, 1);
     myList.insert_nth_pos(3, 3);
