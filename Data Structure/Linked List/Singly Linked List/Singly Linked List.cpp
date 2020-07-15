@@ -7,7 +7,7 @@ typedef struct node singlyList;
 struct node
 {
     int data;
-    singlyList *next = NULL, *tail = NULL;
+    singlyList *next = NULL;
     singlyList *create_node(int data, singlyList *next)
     {
         singlyList *new_node = (singlyList*)malloc(sizeof(singlyList));
@@ -17,14 +17,14 @@ struct node
     }
     void append(int data)
     {
+        singlyList *temp = next;
         if(next == NULL)
         {
             next = create_node(data, NULL);
-            tail = next;
             return;
         }
-        tail -> next = create_node(data, NULL);
-        tail = tail -> next;
+       while(temp -> next != NULL) temp = temp -> next;
+       temp -> next = create_node(data, NULL);
     }
     void insert_nth_pos(int data, int pos)
     {
@@ -96,6 +96,7 @@ int main()
     myList.append(2);
     myList.insert_nth_pos(1, 1);
     myList.insert_nth_pos(3, 3);
+    myList.append(4);
     myList.print();
     myList.reverse_list();
     myList.print();
