@@ -92,17 +92,17 @@ struct node
 
 int main()
 {
-    SinglyList obj;
-    obj.append(2);
-    obj.insert_nth_pos(1, 1);
-    obj.insert_nth_pos(3, 3);
-    obj.print();
-    obj.reverse_list();
-    obj.print();
-    obj.reverse_list();
-    obj.delete_nth_node(1);
-    obj.delete_data(2);
-    obj.print();
+    SinglyList myList;
+    myList.append(2);
+    myList.insert_nth_pos(1, 1);
+    myList.insert_nth_pos(3, 3);
+    myList.print();
+    myList.reverse_list();
+    myList.print();
+    myList.reverse_list();
+    myList.delete_nth_node(1);
+    myList.delete_data(2);
+    myList.print();
 
     return 0;
 }
