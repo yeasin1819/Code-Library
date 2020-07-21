@@ -2,58 +2,66 @@
 
 using namespace std;
 
-typedef struct node Stack;
+typedef struct node Node;
+typedef struct stack_ds Stack;
 
 struct node
 {
     int data;
-    Stack *next;
+    Node *next;
 };
 
-void push(Stack *s, int data)
+struct stack_ds
 {
-    Stack *new_Stack = (Stack*)malloc(sizeof(Stack));
-    new_Stack -> data = data;
-    new_Stack -> next = s -> next;
-    s -> next = new_Stack;
-}
+    Node *head = NULL;
 
-void pop(Stack *s)
-{
-    if(s -> next == NULL) return;
-    Stack *temp = s -> next;
-    s -> next = s -> next -> next;
-    delete temp;
-}
-
-void top(Stack *s)
-{
-    if(s -> next == NULL) return;
-    cout<<s -> next -> data<<endl;
-}
-
-void print(Stack *s)
-{
-    while(s -> next != NULL)
+    void push(int data)
     {
-        cout<<s -> next -> data<<" ";
-        s = s -> next;
+        Node *new_node = (Node*)malloc(sizeof(Node));
+        new_node -> data = data;
+        new_node -> next = NULL;
+        if(head == NULL)
+        {
+            head = new_node;
+            return;
+        }
+        new_node -> next = head;
+        head = new_node;
     }
-    cout<<endl;
-}
+
+    int top()
+    {
+        return head -> data;
+    }
+    void pop()
+    {
+        if(head == NULL) return;
+        head = head -> next;
+    }
+    bool empty()
+    {
+        if(head == NULL) return 1;
+        return 0;
+    }
+};
 
 int main()
 {
-    Stack *s = (Stack*)malloc(sizeof(Stack));
-    s -> next = NULL;
+    ///input: 9 10 12 16 24 21 16 14 12 ctrl + z
+    Stack s;
 
-    push(s, 1);
-    push(s, 2);
-    push(s, 3);
-    pop(s);
-    top(s);
-    push(s, 3);
-    print(s);
-
+    int n, data;
+    while(cin>>data != NULL)
+    {
+        s.push(data);
+    }
+    cout<<"Element at top of the stack: "<<s.top()<<endl;
+    cout<<"Stack data element are: "<<endl;
+    while(!s.empty())
+    {
+        int x = s.top();
+        cout<<x<<endl;
+        s.pop();
+    }
     return 0;
 }
