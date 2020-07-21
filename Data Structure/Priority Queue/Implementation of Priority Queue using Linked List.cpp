@@ -22,8 +22,8 @@ struct priority_Queue
         new_node -> next = NULL;
 
         if(head == NULL) head = tail = new_node;
-        else if(head -> data < data) new_node -> next = head, head = new_node;
-        else if(tail -> data > data) tail -> next = new_node, tail = new_node;
+        else if(head -> data <= data) new_node -> next = head, head = new_node;
+        else if(tail -> data >= data) tail -> next = new_node, tail = new_node;
         else
         {
             Node *temp = head, *prev;
