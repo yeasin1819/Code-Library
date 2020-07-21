@@ -49,8 +49,8 @@ struct priority_Queue
     {
         if(root == NULL) return;
         print(root -> right);
-        print(root -> left);
         cout<<root -> data<<" ";
+        print(root -> left);
     }
 };
 
