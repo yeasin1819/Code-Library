@@ -27,8 +27,10 @@ struct Priority_queue
         int n = idx;
         while(idx)
         {
-            if(arr[idx / 2] < arr[idx]) swap(arr[idx / 2], arr[idx]);
-            idx = idx / 2;
+            int p = idx / 2;
+            if(!(idx % 2)) p--;
+            if(arr[p] < arr[idx]) swap(arr[p], arr[idx]);
+            idx = p;
         }
         idx = n + 1;
     }
