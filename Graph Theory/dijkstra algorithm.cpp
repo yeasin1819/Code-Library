@@ -1,3 +1,5 @@
+/*Accepted: submission link//https://www.hackerearth.com/submission/55014460/*/
+
 #include <bits/stdc++.h>
 #define INF 1000000000
 
@@ -72,9 +74,17 @@ void dijkastra(int source, Graph g)
 int main()
 {
     Graph g;
-
-    freopen("input.txt", "r", stdin);
     g.getAdjList();
     dijkastra(1, g);
-
+/*
+Sample Input:
+5 5
+1 2 5
+1 3 2
+3 4 1
+1 4 6
+3 5 5
+Sample Output:
+5 2 3 7
+*/
 }
