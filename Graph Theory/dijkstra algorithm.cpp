@@ -1,4 +1,4 @@
-/*Accepted: submission link//https://www.hackerearth.com/submission/55014460/*/
+/*Accepted, submission link: https://www.hackerearth.com/submission/55014460/*/
 
 #include <bits/stdc++.h>
 #define INF 1000000000
