@@ -1,4 +1,4 @@
-/*Accepted, Submission link: https://www.hackerrank.com/challenges/floyd-city-of-blinding-lights/submissions/code/204188137 */
+/*Accepted, Submission link: https://www.hackerearth.com/submission/55014460/ */
 #include <bits/stdc++.h>
 #define INF 100000
 
