@@ -3,26 +3,12 @@
 
 using namespace std;
 
-int findMax(int arr[], int n)
-{
-    int idx = 0;
-    for(int i = 1; i <= n; i++)
-        if(arr[idx] < arr[i]) idx = i;
-    return idx;
-}
-
 void solve()
 {
     bool adjMat[18][18];
-    for(int i = 0; i < 18; i++)
-    {
 
-        for(int j =  0; j < 18; j++)
-        {
-            adjMat[i][j] = false;
-            adjMat[j][i] = false;
-        }
-    }
+    for(int i = 0; i < 18; i++)
+        for(int j = 0; j < 18; j++) adjMat[i][j] = false;
     int n, m, ans = 0, deg[18] = {0};
     char u, v;
 
@@ -30,23 +16,24 @@ void solve()
     for(int i = 0; i < m; i++)
     {
         cin>>u>>v;
-        adjMat[u - 64][v - 64] = true;
-        adjMat[v - 64][u - 64] = true;
-        deg[u - 64]++;
-        deg[v - 64]++;
+        u -= 64;
+        v -= 64;
+        adjMat[u][v] = true;
+        adjMat[v][u] = true;
+        deg[u]++;
+        deg[v]++;
     }
 
     for(int i = 1; i <= n; i++)
     {
-        int idx = findMax(deg, n);
+        int idx = max_element(deg, deg + n) - deg;
         if(deg[idx] == 0) break;
         for(int j = 1; j <= n; j++)
         {
-            if(adjMat[idx][j])
-            {
-                adjMat[idx][j] = false;
-                deg[j]--;
-            }
+           if(adjMat[idx][j]) {
+            adjMat[idx][j] = false;
+            deg[j]--;
+           }
         }
         deg[idx] = -1;
     }
@@ -68,3 +55,4 @@ int main()
 
     return 0;
 }
+
