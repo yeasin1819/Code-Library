@@ -2,58 +2,67 @@
 
 using namespace std;
 
-vector<int> adj[100];
-bool visited[100] = {false};
+int vertex, edge, u, v, len;
+vector<bool>visited;
+vector< vector<int> > adjList;
 
-int edge, vertex;
-
-void input_graph()
+void getAdjList()
 {
-    int a, b;
-    cout<<"Enter the number of edge: ";
-    cin>>edge;
-    cout<<"Enter the number of vertex: ";
-    cin>>vertex;
+    cin>>vertex>>edge;
+    adjList.resize(vertex + 1);
+    visited.resize(vertex + 1);
+    for(int i = 0; i <= vertex; i++) visited[i] = false;
     for(int i = 0; i < edge; i++)
     {
-        cin>>a>>b;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
+        cin>>u>>v;
+        adjList[u].push_back(v);
+        adjList[v].push_back(u);
     }
 }
 
-void dfs(int s)
+void dfs(int source)
 {
     stack<int> st;
 
-    st.push(s);
+    st.push(source);
 
     while(!st.empty())
     {
-        int t = st.top();
-        if(!visited[t])
+        u = st.top();
+        if(visited[u])
         {
-            cout<<t<<endl;
-            visited[t] = true;
+            cout<<u<<" ";
+            st.pop();
+            continue;
         }
-        st.pop();
-        for(int i = 0; i < adj[t].size(); i++)
+        int len = adjList[u].size();
+        for(int i = 0; i < len; i++)
         {
-            if(visited[adj[t][i]] == false)
-            {
-                st.push(adj[t][i]);
-            }
+            v = adjList[u][i];
+            if(!visited[v]) st.push(v);
         }
+        visited[u] = true;
     }
+}
+
+void solve()
+{
+    getAdjList();
+    int cnt = 0;
+    for(int i = 0; i < vertex; i++)
+        if(!visited[i]) dfs[i];
 }
 
 int main()
 {
-
-    input_graph();
-
-    for(int i = 0; i < vertex; i++)
-        if(!visited[i]) dfs(i);
+    //ios::sync_with_stdio(false);
+    //cin.tie(0);
+    //freopen("input.txt", "r", stdin);
+    //freopen("output.txt", "w", stdout);
+    // int t; cin>>t;
+    //int i = 1; while(i <= t) cout<<"Case "<<i++<<": "<<endl, solve();
+    // while(t--)
+    solve();
 
     return 0;
 }
