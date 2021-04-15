@@ -1,15 +1,15 @@
-void dfs(int source)
+  void dfs(int source)
     {
         stack<int> st;
         st.push(source);
         while(!st.empty())
         {
             int u = st.top();
-            if(visited[u])
+            st.pop();
+            if(!visited[u])
             {
                 //cout<<u<<" ";
-                st.pop();
-                continue;
+                visited[u] = true;
             }
             int v, len = adj[u].size();
             for(int i = len - 1; i >= 0; i--)
@@ -17,6 +17,5 @@ void dfs(int source)
                 v = adj[u][i];
                 if(!visited[v]) st.push(v);
             }
-            visited[u] = true;
         }
     }
