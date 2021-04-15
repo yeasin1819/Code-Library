@@ -1,5 +1,5 @@
- void dfsTime(int source)
- {
+void dfsTime(int source)
+    {
         cout<<source<<" ";
         dt[source] = tm++;
         visited[source] = true;
@@ -10,4 +10,4 @@
             if(!visited[v]) dfsTime(v);
         }
         ft[source] = tm++;
-  }
+    }
