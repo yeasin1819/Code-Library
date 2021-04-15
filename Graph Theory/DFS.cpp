@@ -1,3 +1,4 @@
+/*Accepted, Submission Link: https://www.codechef.com/viewsolution/44978282 */
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -6,14 +7,16 @@ using namespace std;
 
 struct Graph
 {
-    int vertex, edge;
+    int vertex, edge, cnt;
     vector<int>adj[SIZE];
-    bool visited[SIZE] = {0};
+    bool visited[SIZE];
 
     Graph(int v, int e)
     {
         vertex = v;
         edge = e;
+        memset(visited, false, sizeof(bool) * SIZE);
+        cnt = 0;
     }
     void getAdjList()
     {
@@ -25,19 +28,19 @@ struct Graph
             adj[v].push_back(u);
         }
     }
-    // int adj[vertex];
     void dfs(int source)
     {
         stack<int> st;
         st.push(source);
         while(!st.empty())
         {
+            cnt++;
             int u = st.top();
-            if(visited[u])
+            st.pop();
+            if(!visited[u])
             {
                 //cout<<u<<" ";
-                st.pop();
-                continue;
+                visited[u] = true;
             }
             int v, len = adj[u].size();
             for(int i = len - 1; i >= 0; i--)
@@ -45,13 +48,11 @@ struct Graph
                 v = adj[u][i];
                 if(!visited[v]) st.push(v);
             }
-            visited[u] = true;
         }
     }
     ~Graph()
     {
         for(int i = 0; i <= vertex; i++) adj[i].clear();
-        //delete adj;
     }
 };
 
@@ -61,7 +62,7 @@ void solve()
     cin>>v>>e;
     Graph g(v, e);
     g.getAdjList();
-    for(int i = 0; i < g.vertex; i++)
+    for(int i = 0; i < v; i++)
         if(!g.visited[i]) g.dfs(i), ans++;
     cout<<ans<<endl;
 }
@@ -72,10 +73,9 @@ int main()
     //cin.tie(0);
     //freopen("input.txt", "r", stdin);
     //freopen("output.txt", "w", stdout);
-    int t; cin>>t;
+    int t; cin>>t; while(t--) solve();
     //int i = 1; while(i <= t) cout<<"Case "<<i++<<": "<<endl, solve();
-    while(t--)
-    solve();
+    // solve();
 
     return 0;
 }
