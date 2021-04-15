@@ -2,55 +2,68 @@
 
 using namespace std;
 
-int vertex, edge, u, v, len;
-vector<bool>visited;
-vector< vector<int> > adjList;
+#define SIZE 100001
 
-void getAdjList()
+struct Graph
 {
-    cin>>vertex>>edge;
-    adjList.resize(vertex + 1);
-    visited.resize(vertex + 1);
-    for(int i = 0; i <= vertex; i++) visited[i] = false;
-    for(int i = 0; i < edge; i++)
+    int vertex, edge;
+    vector<int>adj[SIZE];
+    bool visited[SIZE] = {0};
+
+    Graph(int v, int e)
     {
-        cin>>u>>v;
-        adjList[u].push_back(v);
-        adjList[v].push_back(u);
+        vertex = v;
+        edge = e;
     }
-}
-
-void dfs(int source)
-{
-    stack<int> st;
-
-    st.push(source);
-
-    while(!st.empty())
+    void getAdjList()
     {
-        u = st.top();
-        if(visited[u])
+        for(int i = 0; i < edge; i++)
         {
-            cout<<u<<" ";
-            st.pop();
-            continue;
+            int u, v;
+            cin>>u>>v;
+            adj[u].push_back(v);
+            adj[v].push_back(u);
         }
-        int len = adjList[u].size();
-        for(int i = 0; i < len; i++)
-        {
-            v = adjList[u][i];
-            if(!visited[v]) st.push(v);
-        }
-        visited[u] = true;
     }
-}
+    // int adj[vertex];
+    void dfs(int source)
+    {
+        stack<int> st;
+        st.push(source);
+        while(!st.empty())
+        {
+            int u = st.top();
+            if(visited[u])
+            {
+                //cout<<u<<" ";
+                st.pop();
+                continue;
+            }
+            int v, len = adj[u].size();
+            for(int i = len - 1; i >= 0; i--)
+            {
+                v = adj[u][i];
+                if(!visited[v]) st.push(v);
+            }
+            visited[u] = true;
+        }
+    }
+    ~Graph()
+    {
+        for(int i = 0; i <= vertex; i++) adj[i].clear();
+        //delete adj;
+    }
+};
 
 void solve()
 {
-    getAdjList();
-    int cnt = 0;
-    for(int i = 0; i < vertex; i++)
-        if(!visited[i]) dfs[i];
+    int v, e, ans = 0;
+    cin>>v>>e;
+    Graph g(v, e);
+    g.getAdjList();
+    for(int i = 0; i < g.vertex; i++)
+        if(!g.visited[i]) g.dfs(i), ans++;
+    cout<<ans<<endl;
 }
 
 int main()
@@ -59,9 +72,9 @@ int main()
     //cin.tie(0);
     //freopen("input.txt", "r", stdin);
     //freopen("output.txt", "w", stdout);
-    // int t; cin>>t;
+    int t; cin>>t;
     //int i = 1; while(i <= t) cout<<"Case "<<i++<<": "<<endl, solve();
-    // while(t--)
+    while(t--)
     solve();
 
     return 0;
