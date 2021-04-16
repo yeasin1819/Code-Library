@@ -12,7 +12,7 @@
             else//or else if(!visited[v])
             {
                 dfsForAp(v, source);/*Here, 'v' is Converted to 'source' and 'source' is parent of v*/
- /*               low[source] = min(low[source], low[v]);
+                low[source] = min(low[source], low[v]);
                 child++;
                 if(dt[source] <= low[v]) flag = true;
             }
