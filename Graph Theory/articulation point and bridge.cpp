@@ -1,6 +1,7 @@
+/*Accepted, Submission Link: https://lightoj.com/problem/critical-links */
 #include <bits/stdc++.h>
-/*
-#define SIZE 100
+
+#define SIZE 10001
 
 using namespace std;
 
@@ -9,7 +10,7 @@ struct Edge
     int u, v;
     void print()
     {
-    cout<<u<<" "<<v<<endl;
+        cout<<u<<" - "<<v<<endl;
     }
 };
 
@@ -18,34 +19,42 @@ struct cmp
     bool operator() (Edge &a, Edge &b)
     {
         if(a.v < a.u) swap(a.u, a.v);
-        if(b.v < a.u) swap(a.u, a.v);
-        if(a.u < b.u) return true;
-        if(a.v < b.v) return true;
-        return false;
+        if(b.v < b.u) swap(b.u, b.v);
+        if(a.u == b.u) return a.v < b.v;
+        return a.u < b.u;
     }
 };
 
 struct Graph
 {
-    int vertex, edge, tm = 1, dt[SIZE], low[SIZE];
-    vector<int>adj[SIZE], ap;
+    int vertex, low[SIZE], dt[SIZE], tm = 1;
+    vector<int>adj[SIZE];
+    vector<Edge> bridge;
     bool visited[SIZE];
-    vector<Edge>bridge;
 
-    Graph(int v, int e)
+    Graph(int v)
     {
         vertex = v;
-        edge = e;
         memset(visited, false, sizeof(bool) * SIZE);
     }
     void getAdjList()
     {
-        for(int i = 0; i < edge; i++)
+        int node, edge = 0, v;
+        string str;
+        for(int i = 0; i < vertex; i++)
         {
-            int u, v;
-            cin>>u>>v;
-            adj[u].push_back(v);
-            adj[v].push_back(u);
+            cin>>node;
+            cin>>str;
+            str.erase(str.begin());
+            str.erase(str.begin() + str.length() - 1);
+            stringstream st(str);
+            st>>edge;
+            while(edge--)
+            {
+                cin>>v;
+                adj[node].push_back(v);
+                adj[v].push_back(node);
+            }
         }
     }
     void dfs(int source, int parent)
@@ -68,11 +77,11 @@ struct Graph
                 dfs(v, source);
                 child++;
                 low[source] = min(low[source], low[v]);
-                if(dt[source] <= low[v]) flag = true;
+                //if(dt[source] <= low[v]) flag = true;
                 if(dt[source] < low[v]) bridge.push_back({source, v});
             }
         }
-        if(flag && child > 1) ap.push_back(source);
+       // if(flag && child > 1) ap.push_back(source);
         tm++;
     }
     ~Graph()
@@ -80,33 +89,27 @@ struct Graph
         for(int i = 0; i <= vertex; i++) adj[i].clear();
     }
 };
+
 void solve()
 {
-    int v, e;
-    cin>>v>>e;
-    Graph g(v, e);
+    int v;
+    cin>>v;
+    Graph g(v);
     g.getAdjList();
-    g.dfs(0, 0);
-    sort(g.ap.begin(), g.ap.end());
+    for(int i = 0; i < v; i++) if(!g.visited[i])g.dfs(i, i);
     sort(g.bridge.begin(), g.bridge.end(), cmp());
-    cout<<g.ap.size()<<endl;
-    for(int i = 0; i < g.ap.size(); i++) cout<<g.ap[i]<<" ";
-    cout<<endl;
-    cout<<g.bridge.size()<<endl;
+    cout<<g.bridge.size()<<" critical links"<<endl;
     for(int i = 0; i < g.bridge.size(); i++) g.bridge[i].print();
-    cout<<endl;
 }
 
 int main()
 {
-    //ios::sync_with_stdio(false);
-    //cin.tie(0);
+    ios::sync_with_stdio(false);
+    cin.tie(0);
     //freopen("input.txt", "r", stdin);
     //freopen("output.txt", "w", stdout);
     //int t; cin>>t; while(t--) solve();
-    //int i = 1; while(i <= t) cout<<"Case "<<i++<<": "<<endl, solve();
-    solve();
-
+    int t; cin>>t; int i = 1; while(i <= t) cout<<"Case "<<i++<<":"<<endl, solve();
+    //solve();
     return 0;
 }
-*/
