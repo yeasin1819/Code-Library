@@ -5,7 +5,7 @@ Dim Row             As Integer        'Global Variable
 
 Sub GMAIL_Login()
     
-    For Row = 4 To 5
+    For Row = 1 To 1
         
         Dim IE      As New SHDocVw.InternetExplorer
         Dim HTMLElement As MSHTML.IHTMLElement
@@ -29,8 +29,8 @@ Sub GMAIL_Login()
         password = ThisWorkbook.Sheets("Sheet1").Range("D" & Row).Value        'Read Password From Excel
         
         If IsObject(IE.document.getElementById("Email")) Then
-            Call InputUserNameOld(userName) 'User Name and Clicked Next Button
-        Else: InputUserNameLatest (userName) 'User Name and Clicked Next Button
+            Call InputUserNameOld(userName)        'User Name and Clicked Next Button
+        Else: InputUserNameLatest (userName)        'User Name and Clicked Next Button
         End If
         
         With IE
@@ -57,26 +57,30 @@ Sub GMAIL_Login()
             
         Else
             ThisWorkbook.Sheets("Sheet1").Range("G" & Row).Value = "1"
-            
-            Call Wait(10)
-            HTMLDoc.getElementById("gb_71").Click        'Sign Out Button Clicked
-            
-            Call Wait(5)
-            'HTMLDoc.getElementsByClassName("BHzsHc")(0).Click 'Add new Account Button Clicked
-            HTMLDoc.getElementsByClassName("BHzsHc")(1).Click        'Remove an Account Button Clicked
-            Call Wait(5)
-            HTMLDoc.getElementsByClassName("wLBAL")(0).Click        'Clicked for Confirmation dialog
-            Call Wait(5)
-            HTMLDoc.getElementsByClassName("RveJvd snByac")(0).Click        'Clicked for conferming
+            On Error Resume Next
+            If IsObject(HTMLDoc.getElementsByClassName("CwaK9")) Then        'Skip Recovery Option
+            HTMLDoc.getElementsByClassName("CwaK9")(1).Click
         End If
-        Call Wait(5)
-        IE.Quit
-        Set IE = Nothing
-        Set HTMLDoc = Nothing
-        Set HTMLElement = Nothing
         
-    Next
+        Call Wait(10)
+        HTMLDoc.getElementById("gb_71").Click        'Sign Out Button Clicked
+        
+        Call Wait(5)
+        'HTMLDoc.getElementsByClassName("BHzsHc")(0).Click 'Add new Account Button Clicked
+        HTMLDoc.getElementsByClassName("BHzsHc")(1).Click        'Remove an Account Button Clicked
+        Call Wait(5)
+        HTMLDoc.getElementsByClassName("wLBAL")(0).Click        'Clicked for Confirmation dialog
+        Call Wait(5)
+        HTMLDoc.getElementsByClassName("RveJvd snByac")(0).Click        'Clicked for conferming
+    End If
+    Call Wait(5)
+    IE.Quit
+    Set IE = Nothing
+    Set HTMLDoc = Nothing
+    Set HTMLElement = Nothing
     
+Next
+
 End Sub
 
 Private Sub Wait(PAUSE_TIME As Integer)
