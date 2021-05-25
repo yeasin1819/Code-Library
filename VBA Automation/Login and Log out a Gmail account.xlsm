@@ -1,0 +1,103 @@
+Option Explicit
+
+Dim HTMLDoc         As New MSHTML.HTMLDocument        'Global Variable
+Dim Row             As Integer        'Global Variable
+
+Sub GMAIL_Login()
+    
+    For Row = 4 To 5
+        
+        Dim IE      As New SHDocVw.InternetExplorer
+        Dim HTMLElement As MSHTML.IHTMLElement
+        Dim userName As String
+        Dim password As String
+        
+        With IE
+            .Visible = True
+            .Silent = True
+            .navigate "https://accounts.google.com/signin"
+            Do While .Busy Or .readyState <> READYSTATE_COMPLETE
+                DoEvents
+            Loop
+        End With
+        
+        Call Wait(5)
+        
+        Set HTMLDoc = IE.document
+        
+        userName = ThisWorkbook.Sheets("Sheet1").Range("C" & Row).Value        'Read User Name From Excel
+        password = ThisWorkbook.Sheets("Sheet1").Range("D" & Row).Value        'Read Password From Excel
+        
+        If IsObject(IE.document.getElementById("Email")) Then
+            Call InputUserNameOld(userName) 'User Name and Clicked Next Button
+        Else: InputUserNameLatest (userName) 'User Name and Clicked Next Button
+        End If
+        
+        With IE
+            Do While .Busy Or .readyState <> READYSTATE_COMPLETE
+                DoEvents
+            Loop
+        End With
+        
+        Call Wait(5)
+        If IsObject(HTMLDoc.getElementsByName("password")(1)) Then
+            HTMLDoc.getElementsByName("password")(1).Value = password
+        Else: HTMLDoc.getElementsByName("Passwd")(1).Value = password
+        End If
+        
+        'Call Wait(10)
+        HTMLDoc.getElementsByClassName("VfPpkd-RLmnJb")(0).Click        'Sigin Button Clicked
+        
+        Call Wait(5)
+        If IsObject(IE.document.getElementById("deviceAddress")) Then
+            ThisWorkbook.Sheets("Sheet1").Range("G" & Row).Value = "0"
+            
+        ElseIf IsObject(IE.document.getElementById("phoneNumberId")) Then
+            ThisWorkbook.Sheets("Sheet1").Range("G" & Row).Value = "0"
+            
+        Else
+            ThisWorkbook.Sheets("Sheet1").Range("G" & Row).Value = "1"
+            
+            Call Wait(10)
+            HTMLDoc.getElementById("gb_71").Click        'Sign Out Button Clicked
+            
+            Call Wait(5)
+            'HTMLDoc.getElementsByClassName("BHzsHc")(0).Click 'Add new Account Button Clicked
+            HTMLDoc.getElementsByClassName("BHzsHc")(1).Click        'Remove an Account Button Clicked
+            Call Wait(5)
+            HTMLDoc.getElementsByClassName("wLBAL")(0).Click        'Clicked for Confirmation dialog
+            Call Wait(5)
+            HTMLDoc.getElementsByClassName("RveJvd snByac")(0).Click        'Clicked for conferming
+        End If
+        Call Wait(5)
+        IE.Quit
+        Set IE = Nothing
+        Set HTMLDoc = Nothing
+        Set HTMLElement = Nothing
+        
+    Next
+    
+End Sub
+
+Private Sub Wait(PAUSE_TIME As Integer)
+    
+    Dim sngStart    As Single
+    
+    sngStart = Timer
+    Do Until Timer - sngStart > PAUSE_TIME
+        DoEvents
+    Loop
+    
+End Sub
+
+Private Sub InputUserNameOld(userName As String)
+    
+    HTMLDoc.all.Email.Value = userName
+    HTMLDoc.all.SignIn.Click
+    
+End Sub
+
+Private Sub InputUserNameLatest(userName As String)
+    HTMLDoc.all.identifierId.Value = userName
+    HTMLDoc.getElementsByClassName("VfPpkd-vQzf8d")(0).Click
+End Sub
