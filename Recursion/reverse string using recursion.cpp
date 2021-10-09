@@ -2,12 +2,12 @@
 
 using namespace std;
 
-
 string rev_string(string str, int len)
 {
     if(len == -1) return "";
     return str[len] + rev_string(str, len - 1);
 }
+
 string rev_string(string str)
 {
     if(str == "") return str;
