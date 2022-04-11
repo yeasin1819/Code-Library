@@ -2,14 +2,23 @@
 
 using namespace std;
 
-void selection_sort(int ara[], int n)
-{
-    for(int i = 0; i < n; i++)
-    {
-        for(int j = i+1; j < n; j++)
-            if(ara[i] > ara[j]) swap(ara[i], ara[j]);
-    }
-}
+void selectionSort(int arr[], int n) 
+{ 
+    int i, j, min_idx; 
+  
+    // One by one move boundary of unsorted subarray 
+    for (i = 0; i < n-1; i++) 
+    { 
+        // Find the minimum element in unsorted array 
+        min_idx = i; 
+        for (j = i+1; j < n; j++) 
+        if (arr[j] < arr[min_idx]) 
+            min_idx = j; 
+  
+        // Swap the found minimum element with the first element 
+        swap(arr[min_idx], arr[i]); 
+    } 
+} 
 int main()
 {
     int ara[] = {5, 10, 0, -2, 10};
