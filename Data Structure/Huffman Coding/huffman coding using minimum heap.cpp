@@ -90,6 +90,7 @@ int main()
     */
     Heap h;
     Node *a;
+    a = new Node;
     int n;
 
     cin>>n;
