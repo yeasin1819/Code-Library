@@ -44,6 +44,6 @@ int SOD(int n)
 int main()
 {
     sieve();
-    cout<<SOD(12)<<endl;
+    //cout<<SOD(12)<<endl;
     return 0;
 }
