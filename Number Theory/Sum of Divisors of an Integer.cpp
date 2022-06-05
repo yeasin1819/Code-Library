@@ -24,6 +24,7 @@ int SOD(int n)
     int sum = 1, t_sum, r = sqrt(n) + 1, p;
     for(int i = 0; i < primes.size() && primes[i] <= r; i++)
     {
+        t_sum = 1;
         if(!(n % primes[i]))
         {
             t_sum = 1, p = 1;
